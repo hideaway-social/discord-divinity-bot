@@ -26,18 +26,22 @@ async def on_message(message):
     if message.content.startswith("!skill "):
         boot_database()
         skill_name = clean_content(message.content, "!skill")
-        skill_search = Skill.where("string", "like", "%{}%".format(skill_name))
-        count = skill_search.count()
+        skills_collection = Skill.where("string", "like", "%{}%".format(skill_name)).get()
+        count = skills_collection.count()
         if count == 0:
             await message.channel.send(
                 'Couldn\'t find any skills similar to "{}".'.format(skill_name)
             )
         elif count == 1:
-            skill = skill_search.first()
+            skill = skills_collection.first()
             await message.channel.send("", embed=skill.generateEmbed())
         else:
-            skill = skill_search.first()
+            skill = skills_collection.shift()
             await message.channel.send("", embed=skill.generateEmbed())
+            remaining_list = "Also found the following skill(s):"
+            for skill in skills_collection:
+                remaining_list += "\n - {}".format(skill.name)
+            await message.channel.send("{}".format(remaining_list))
 
 
 @client.event
