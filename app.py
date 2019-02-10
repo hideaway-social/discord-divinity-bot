@@ -37,7 +37,7 @@ async def on_message(message):
             await message.channel.send("", embed=skill.generateEmbed())
         else:
             skill = skill_search.first()
-            await message.channel.send("", embed=skills.generateEmbed())
+            await message.channel.send("", embed=skill.generateEmbed())
 
 
 @client.event

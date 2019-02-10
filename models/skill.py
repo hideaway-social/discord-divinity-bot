@@ -34,6 +34,6 @@ class Skill(Model):
             )
         skill_embed.add_field(name="Notes", value="{}".format(self.notes), inline=False)
         skill_embed.set_footer(
-            text="{} Skill".format(self.school), icon_url="{}".format(self.icon)
+            text="{} Skill".format(self.school), icon_url="{}".format(self.skillbook_icon)
         )
         return skill_embed
