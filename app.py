@@ -1,10 +1,13 @@
 # Work with Python 3.6
+import os
 import discord
 import asyncio
-from divinitybot import Skill
+from models import Skill
 from helpers import boot_database
+from dotenv import load_dotenv
+load_dotenv()
 
-TOKEN = os.environ.get('DISCORD_TOKEN', '')
+TOKEN = os.getenv('DISCORD_TOKEN', '')
 
 client = discord.Client()
 

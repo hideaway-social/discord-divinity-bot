@@ -16,4 +16,9 @@ Visit the URL https://discordapp.com/oauth2/authorize?client_id=XXXXXXXXXXXX&sco
 ## Install Requirements
 `python3 -m pip install -r requirements.txt`
 
-## Update env
+## Setup .env
+`cp .env.example .env`
+Then update the fake token with the one generated earlier.
+
+## Run the app
+`python3 app.py`
