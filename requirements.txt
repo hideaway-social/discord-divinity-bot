@@ -1,2 +1,3 @@
+beautifulsoup4==4.7.1
 -e git://github.com/Rapptz/discord.py.git@700dbb5555f7edd5a1fa8915d606495439b24ee3#egg=discord.py
 python-dotenv==0.10.1
