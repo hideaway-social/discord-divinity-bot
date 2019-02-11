@@ -2,7 +2,7 @@
 import os
 import discord
 import asyncio
-from models import Skill
+from models import Skill, Search
 from helpers import boot_database
 from dotenv import load_dotenv
 
@@ -22,6 +22,12 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
+
+    if message.content.startswith("!search "):
+        string = clean_content(message.content, "!search")
+        print(string)
+        data = Search()
+        await message.channel.send("{}".format(data))
 
     if message.content.startswith("!skill "):
         boot_database()
