@@ -34,10 +34,10 @@ async def on_message(message):
             )
         elif count == 1:
             skill = skills_collection.first()
-            await message.channel.send("", embed=skill.generateEmbed())
+            await message.channel.send("", embed=skill.generateSingleEmbed())
         else:
             skill = skills_collection.shift()
-            await message.channel.send("", embed=skill.generateEmbed())
+            await message.channel.send("", embed=skill.generateSingleEmbed())
             remaining_list = "Also found the following skill(s):"
             for skill in skills_collection:
                 remaining_list += "\n - {}".format(skill.name)
