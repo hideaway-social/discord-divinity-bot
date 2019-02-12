@@ -3,6 +3,7 @@ from orator.orm import belongs_to_many
 from .school import School
 from discord import Embed
 
+
 class Build(Model):
 
     CONFIG = {"color": 0xEF952C}
@@ -37,6 +38,8 @@ class Build(Model):
         schools_string = ""
         for build in builds:
             build_embed.add_field(
-                name="{}".format(build.name), value="{}".format(build.description[:220] + "..."), inline=False
+                name="{}".format(build.name),
+                value="{}".format(build.description[:220] + "..."),
+                inline=False,
             )
         return build_embed

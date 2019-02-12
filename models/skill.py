@@ -35,7 +35,9 @@ class Skill(Model):
                 name="Spell Scroll", value="{}".format(self.spell_scroll), inline=False
             )
         if self.notes is not None:
-            skill_embed.add_field(name="Notes", value="{}".format(self.notes), inline=False)
+            skill_embed.add_field(
+                name="Notes", value="{}".format(self.notes), inline=False
+            )
         skill_embed.set_footer(
             text="{}".format(self.school), icon_url="{}".format(self.skillbook_icon)
         )
@@ -49,6 +51,8 @@ class Skill(Model):
         )
         for skill in skills:
             skill_embed.add_field(
-                name="{}".format(skill.name), value="{}".format(skill.description), inline=False
+                name="{}".format(skill.name),
+                value="{}".format(skill.description),
+                inline=False,
             )
         return skill_embed
