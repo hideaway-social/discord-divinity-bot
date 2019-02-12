@@ -23,9 +23,8 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
-
+    hobj = hunspell.HunSpell('dictionaries/en_US.dic', 'dictionaries/en_US.aff')
     if message.content.startswith("!suggest "):
-        hobj = hunspell.HunSpell('dictionaries/en_US.dic', 'dictionaries/en_US.aff')
         string = clean_content(message.content, "!suggest")
         if(not hobj.spell(string)):
             await message.channel.send("Did you maybe mean \"" + hobj.suggest(string)[0] + "\"?")
@@ -40,7 +39,13 @@ async def on_message(message):
     if message.content.startswith("!build "):
         boot_database()
         build_name = clean_content(message.content, "!build")
-        builds_collection = Build.where("string", "like", "%{}%".format(build_name)).get()
+        if(not hobj.spell(build_name)):
+            builds_collection = Build.where("string", "like", "%{}%".format(build_name)).get()
+            for suggestion in hobj.suggest(build_name)[:2]:
+                builds_collection.merge(Build.where("string", "like", "%{}%".format(suggestion)).get())
+            builds_collection.unique()
+        else:
+            builds_collection = Build.where("string", "like", "%{}%".format(build_name)).get()
         count = builds_collection.count()
         if count == 0:
             await message.channel.send(
@@ -55,7 +60,13 @@ async def on_message(message):
     if message.content.startswith("!skill "):
         boot_database()
         skill_name = clean_content(message.content, "!skill")
-        skills_collection = Skill.where("string", "like", "%{}%".format(skill_name)).get()
+        if(not hobj.spell(skill_name)):
+            skills_collection = Skill.where("string", "like", "%{}%".format(skill_name)).get()
+            for suggestion in hobj.suggest(skill_name)[:2]:
+                skills_collection.merge(Skill.where("string", "like", "%{}%".format(suggestion)).get())
+            skills_collection.unique()
+        else:
+            skills_collection = Skill.where("string", "like", "%{}%".format(skill_name)).get()
         count = skills_collection.count()
         if count == 0:
             await message.channel.send(
