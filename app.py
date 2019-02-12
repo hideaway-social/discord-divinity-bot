@@ -25,9 +25,8 @@ async def on_message(message):
 
     if message.content.startswith("!search "):
         string = clean_content(message.content, "!search")
-        print(string)
-        data = Search()
-        await message.channel.send("{}".format(data))
+        data = Search(string)
+        await message.channel.send("", embed=data.performSearch())
 
     if message.content.startswith("!skill "):
         boot_database()
