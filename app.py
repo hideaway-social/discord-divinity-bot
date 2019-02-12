@@ -2,7 +2,7 @@
 import os
 import discord
 import asyncio
-from models import Skill, Search
+from models import Skill, Search, Build, School
 from helpers import boot_database
 from dotenv import load_dotenv
 
@@ -22,6 +22,26 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
+
+    if message.content.startswith("!build "):
+        boot_database()
+        build_name = clean_content(message.content, "!build")
+        builds_collection = Build.where("string", "like", "%{}%".format(build_name)).get()
+        count = builds_collection.count()
+        if count == 0:
+            await message.channel.send(
+                'Couldn\'t find any builds similar to "{}".'.format(build_name)
+            )
+        elif count == 1:
+            build = builds_collection.first()
+            await message.channel.send("", embed=build.generateSingleEmbed())
+        else:
+            build = builds_collection.shift()
+            await message.channel.send("", embed=build.generateSingleEmbed())
+            remaining_list = "Also found the following builds(s):"
+            for build in builds_collection:
+                remaining_list += "\n - {}".format(build.name)
+            await message.channel.send("{}".format(remaining_list))
 
     if message.content.startswith("!search "):
         string = clean_content(message.content, "!search")
