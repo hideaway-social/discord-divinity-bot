@@ -32,7 +32,7 @@ class BuildResponder():
             builds_collection.unique()
         
         if builds_collection.count() == 0:
-            return {'content': 'Couldn\'t find any skills similar to "{}".'.format(self.query)}
+            return {'content': 'Couldn\'t find any builds similar to "{}".'.format(self.query)}
         elif builds_collection.count() == 1:
             return {'content': '', 'embed': builds_collection.first().generateSingleEmbed()}
         else:
