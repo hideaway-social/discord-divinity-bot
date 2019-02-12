@@ -21,5 +21,6 @@ def boot_database():
 def cleanhtml(text):
     return TAG_RE.sub('', str(text))
 
-def clean_content(content, string):
-    return content[len(string) :].strip()
+def clean_content(content, expression):
+    CLEAN_RE = re.compile(r'{}'.format(expression))
+    return CLEAN_RE.sub('', str(content)).strip()
