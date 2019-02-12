@@ -27,8 +27,7 @@ class SkillResponder():
         hobj = hunspell.HunSpell('dictionaries/en_US.dic', 'dictionaries/en_US.aff')
         if(not hobj.spell(self.query)):
             skills_collection = Skill.where("string", "like", "%{}%".format(self.query)).get()
-            for suggestion in hobj.suggest(self.query)[:2]:
-                print(suggestion)
+            for suggestion in hobj.suggest(self.query)[:3]:
                 skills_collection.merge(Skill.where("string", "like", "%{}%".format(suggestion)).get())
             skills_collection.unique()
         

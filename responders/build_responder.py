@@ -27,8 +27,7 @@ class BuildResponder():
         hobj = hunspell.HunSpell('dictionaries/en_US.dic', 'dictionaries/en_US.aff')
         if(not hobj.spell(self.query)):
             builds_collection = Build.where("string", "like", "%{}%".format(self.query)).get()
-            for suggestion in hobj.suggest(self.query)[:2]:
-                print(suggestion)
+            for suggestion in hobj.suggest(self.query)[:3]:
                 builds_collection.merge(Build.where("string", "like", "%{}%".format(suggestion)).get())
             builds_collection.unique()
         
