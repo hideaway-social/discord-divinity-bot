@@ -40,3 +40,15 @@ class Skill(Model):
             text="{}".format(self.school), icon_url="{}".format(self.skillbook_icon)
         )
         return skill_embed
+
+    def generateMultiEmbed(skills):
+        skill_embed = Embed(
+            title="Skills Matching Search",
+            description="There are a few skills matching your search. Try a more detailed search.",
+            color=0xEF952C,
+        )
+        for skill in skills:
+            skill_embed.add_field(
+                name="{}".format(skill.name), value="{}".format(skill.description), inline=False
+            )
+        return skill_embed

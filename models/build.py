@@ -27,3 +27,16 @@ class Build(Model):
                 name="Schools", value="{}".format(schools_string[:-2]), inline=False
             )
         return build_embed
+
+    def generateMultiEmbed(builds):
+        build_embed = Embed(
+            title="Builds Matching Search",
+            description="There are a few builds matching your search. Try a more detailed search.",
+            color=0xEF952C,
+        )
+        schools_string = ""
+        for build in builds:
+            build_embed.add_field(
+                name="{}".format(build.name), value="{}".format(build.description[:220] + "..."), inline=False
+            )
+        return build_embed

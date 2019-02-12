@@ -23,6 +23,11 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    if message.content.startswith("!search "):
+        string = clean_content(message.content, "!search")
+        data = Search(string)
+        await message.channel.send("", embed=data.performSearch())
+
     if message.content.startswith("!build "):
         boot_database()
         build_name = clean_content(message.content, "!build")
@@ -36,17 +41,7 @@ async def on_message(message):
             build = builds_collection.first()
             await message.channel.send("", embed=build.generateSingleEmbed())
         else:
-            build = builds_collection.shift()
-            await message.channel.send("", embed=build.generateSingleEmbed())
-            remaining_list = "Also found the following builds(s):"
-            for build in builds_collection:
-                remaining_list += "\n - {}".format(build.name)
-            await message.channel.send("{}".format(remaining_list))
-
-    if message.content.startswith("!search "):
-        string = clean_content(message.content, "!search")
-        data = Search(string)
-        await message.channel.send("", embed=data.performSearch())
+            await message.channel.send("", embed=Build.generateMultiEmbed(builds_collection))
 
     if message.content.startswith("!skill "):
         boot_database()
@@ -61,12 +56,7 @@ async def on_message(message):
             skill = skills_collection.first()
             await message.channel.send("", embed=skill.generateSingleEmbed())
         else:
-            skill = skills_collection.shift()
-            await message.channel.send("", embed=skill.generateSingleEmbed())
-            remaining_list = "Also found the following skill(s):"
-            for skill in skills_collection:
-                remaining_list += "\n - {}".format(skill.name)
-            await message.channel.send("{}".format(remaining_list))
+            await message.channel.send("", embed=Skill.generateMultiEmbed(skills_collection))
 
 
 @client.event
