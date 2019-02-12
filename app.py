@@ -32,13 +32,17 @@ async def on_message(message):
 
     if message.content.startswith("!search "):
         string = clean_content(message.content, "!search")
-        data = Search(string)
+        hobj = hunspell.HunSpell('dictionaries/en_US.dic', 'dictionaries/en_US.aff')
+        if(not hobj.spell(string)):
+            data = Search(hobj.suggest(string)[0])
+        else:
+            data = Search(string)
         await message.channel.send("", embed=data.performSearch())
 
-    if message.content.startswith("!build "):
+    if message.content.startswith("!build ") or message.content.startswith("!builds "):
         await message.channel.send(**BuildResponder(message).getReply())
 
-    if message.content.startswith("!skill "):
+    if message.content.startswith("!skill ") or message.content.startswith("!skills "):
         await message.channel.send(**SkillResponder(message).getReply())
 
 @client.event
