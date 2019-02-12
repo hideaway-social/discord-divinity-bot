@@ -1,6 +1,5 @@
 from orator import Model
 from discord import Embed
-from helpers import boot_database
 
 
 class Skill(Model):
