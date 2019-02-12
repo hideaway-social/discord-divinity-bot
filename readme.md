@@ -14,6 +14,14 @@ After creating app, on the app details page, scroll down to the section named bo
 Visit the URL https://discordapp.com/oauth2/authorize?client_id=XXXXXXXXXXXX&scope=bot but replace XXXX with your app client ID. Choose the server you want to add it to and select authorize.
 
 ## Install Requirements
+### Hunspell
+```
+brew install hunspell
+ln -s /usr/local/Cellar/hunspell/1.7.0_1/lib/libhunspell-1.7.0.dylib /usr/local/Cellar/hunspell/1.7.0_1/lib/libhunspell.dylib
+CFLAGS=$(pkg-config --cflags hunspell) LDFLAGS=$(pkg-config --libs hunspell) python3 -m pip install -U hunspell
+```
+
+### Pip Requirements
 `python3 -m pip install -U -r requirements.txt`
 
 ## Setup .env
